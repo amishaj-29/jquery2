@@ -1,0 +1,138 @@
+<html>
+<head>
+<link rel="stylesheet" href="jquery.css">
+<script src="https://code.jquery.com/jquery-3.6.3.slim.js" integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous" />
+<script>
+$(function() {
+
+	  /*
+	  Bind the <form> to the 'submit', 'click', and 'change' events.
+	  Pass the Event Object thru
+	  */
+	  $('form').on('submit click change', function(event) {
+
+	    // Reference the type of event
+	    let eType = event.type;
+
+	    // if the 'submit' event was triggered...
+	    if (eType === 'submit') {
+
+	      // Stop the <form> from sending data to a server and resetting
+	      event.preventDefault();
+
+	      // Get the values of the <input>
+	      let name = $('.title').val();
+	      let rate = $('.rating').val();
+
+	      // Declare a htmlString using a Template Literal 
+	      const row = `
+	        <tr><td>${name}</td>
+	        <td>${rate}</td>
+	        <td><input class='sel' type='checkbox'>
+	        </td></tr>`;
+
+	      // Render the htmlString as the last child of the <tbody>
+	      $('.data').append(row);
+
+	      // Reset <form>
+	      $(this).trigger('reset');
+
+	      // ...otherwise if the 'click' event triggered...
+	    } else if (eType === 'click') {
+
+	      // ...and the clicked tag has class 'del'...
+	      if ($(event.target).hasClass('del')) {
+
+	        /*
+	        Collect all checked <input class='sel'>
+	        then on .each() one...
+	        */
+	        $('.sel:checked').each(function(i) {
+
+	          /*
+	          Get the ancestor <tr> of the current .sel
+	          and remove it
+	          */
+	          $(this).closest('tr').remove();
+	        });
+
+	        // Reset the <form>
+	        $('form').trigger('reset');
+	      }
+	      
+	      // ...otherwise if the 'change' event was triggered...
+	    } else if (eType === 'change') {
+
+	      // ...and the changed tag id is 'all'...
+	      if (event.target.id === 'all') {
+
+	        // Check if #all is checked or not
+	        let allChk = $('#all').is(':checked');
+
+	        // Loop thru each() <input class='sel'>...
+	        $('.sel').each(function(i) {
+
+	          /* 
+	          and check current .sel if #all is checked
+	          or uncheck current .sel if #all is NOT checked
+	          */
+	          $(this).prop('checked', allChk);
+	        });
+	      }
+	    }
+	    // Stop any events from bubbling any further up the event chain
+	    event.stopPropagation();
+	  });
+	});
+</script>
+
+</head>
+
+<body>
+<form>
+  <label>Title</label>
+  <!--
+  The [required] attribute enables built-in form validation
+  If the submit event is triggered 
+  and either <input> is blank, the submit event is interrupted and 
+  a tooltip will notify 
+  user that the <input> cannot be empty
+  -->
+  <input class="title" type="text" placeholder="Pulp Fiction" required>
+
+  <label>Rating</label>
+  
+  <!-- See previous comment -->
+  <input class="rating" type="number" min='0' max='10' placeholder="10" required>
+  <!--
+  <button type='submit'> or <input type='submit'>
+  or <button> within a <form> will trigger a submit event by default
+  -->
+  <button>Add Movie</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Rating</th>
+        <th>
+          <button class='del' type='button'>Remove</button>
+          <!--
+          A <label> and a form control (ie <input>, <textarea>, <select>, etc) can be synced by
+          matching the [for] attribute value to the form controls #id:
+          1. <label for='XXX'>
+          2. <input id='XXX'>
+          When synced, clicking one will remotely click the other
+          -->
+          <input id='all' type='checkbox'>
+          <label class='all' for='all'></label></th>
+      </tr>
+    </thead>
+    <!--
+    See post on <table> structure
+    -->
+    <tbody class='data'></tbody>
+  </table>
+
+</form>
+</body>
+</html>

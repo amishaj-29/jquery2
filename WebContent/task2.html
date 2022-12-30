@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script href="task2.js"></script>
+<style>
+
+body{
+    background: url(quino-al-JFeOy62yjXk-unsplash.jpg);
+}
+
+.error{
+background-color:yellow; 
+border-color:red;
+}
+      </style>
+<script>
+$(document).ready(function(){
+    $("#count").click(function(){
+    	var myLength = $("#text").val().length;
+    	$("#span1").html(myLength);
+    	
+  	  const count = 250;
+	  var done = Math.floor(100 * ( myLength / count));
+	  $('.perc').text(done);
+	  $('.meter').width(done);
+    });
+    
+    $("#d1,#d2").keyup(function(){
+    	var myLengthd1 = $("#d1").val().length;
+    	var myLengthd2 = $("#d2").val().length;
+    	var a = parseInt($('#d1').val(), 10);
+        var b = parseInt($('#d2').val(), 10);
+    if(myLengthd1>10){
+    $('#d1').focusout(function(){
+    	$('#d1').addClass("error");
+    })}
+    else if(myLengthd2>10){
+    $('#d2').focusout(function(){
+    	$('#d2').addClass("error");
+    })}
+    else {
+    	$('#btn1').on("click", function(){
+            var sum = a + b;
+            $("#solve").html(sum);
+          });
+    	$('#btn2').on("click", function(){
+            var sum = a - b;
+            $("#solve").html(sum);
+          });
+    	$('#btn3').on("click", function(){
+            var sum = a * b;
+            $("#solve").html(sum);
+          });
+    	$('#btn4').on("click", function(){
+            var sum = a / b;
+            $("#solve").html(sum);
+          });
+    	
+    }
+    	});
+    
+});
+
+
+</script>
+</head>
+<body>
+	<div>
+		<h1>Task-1</h1>
+		<div>
+			<textarea rows="5" cols="33" id="text"></textarea>
+			<br>
+			<span id="span1"></span><br>
+			<br>
+			<div>
+				<span class='meter'
+					style="display: inline-block; background: yellow; color: green; width: 0; height: 20px"></span>
+				<span class='perc'>0</span>%
+			</div>
+			<button type="button" id="count">Count</button>
+		</div>
+	</div>
+	<div id="cal">
+		<h2>Task-2</h2>
+		<h3>Calculator</h3>
+		<div>
+			<span>Enter first no:</span><input type="number" id="d1"><br> <span>Enter
+				second no:</span><input type="number" id="d2"><br>Ans:<span id="solve"></span>
+		</div>
+		<div>
+			<button type="button" id="btn1">Add</button>
+			<button type="button" id="btn2">Sub</button>
+			<button type="button" id="btn3">Mul</button>
+			<button type="button" id="btn4">Div</button>
+		</div>
+	</div>
+<br><br><br><br><br><br>
+<div id="contact_form">
+    <form name="contact" action="">
+        <fieldset>
+            <div class="input-box">
+                <label for="name" id="name_label">Name</label>
+                <input type="text" name="name" id="name" minlength="3" placeholder="Full Name" class="text-input"
+                    required />
+            </div>
+
+            <div class="input-box">
+                <label for="email" id="email_label">Email</label>
+                <input type="email" name="email" id="email" placeholder="example@tutsplus.com" class="text-input" />
+            </div>
+
+            <div class="input-box">
+                <label for="phone" id="phone_label">Phone</label>
+                <input type="tel" name="phone" id="phone" class="text-input" placeholder="xxx-xxx-xxxx"
+                    pattern="[789][0-9]{9}" />
+            </div>
+
+            <input type="submit" name="submit" class="button" id="submit_btn" value="Send" />
+        </fieldset>
+    </form>
+    <div class="greetings">
+        <h1>Contact US</h1>
+        <p>We are waiting to hear from you!</p>
+    </div>
+</div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+<script>
+
+    $(function () {
+        $(function () {
+            $("form").validate();
+        });
+    });
+
+
+    $(document).ready(function () {
+      
+
+
+
+$( "form" ).on( "submit", function(e) {
+    var name = document.getElementById('name').value;
+    if(name=="ranjana"){
+    $("#contact_form").html("<div id='message'></div>");
+    $("#message")
+      .html("<h2>Contact Form Submitted!</h2>")
+      .append("<p>We will be in touch soon.</p>")
+      .hide()
+      .fadeIn(1500, function () {
+        $("#message").append(
+          "<img id='checkmark' src='checkG.png' />"
+        );
+      });
+    }
+      else{
+        $('#contact_form').html('Invalid Credentials...')
+      }
+e.preventDefault();
+});
+    });
+</script>
+</body>
+</html>
